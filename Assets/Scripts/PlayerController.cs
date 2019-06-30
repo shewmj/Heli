@@ -8,34 +8,51 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Animator animator;
     private Rigidbody2D rb2d;
-    private bool isjump;
+    private bool isJumping;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+    public float jumpMultiplier = 2f;
+    private bool facingRight;
     
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        isjump = false;
-
-        
+        isJumping = false;
+        facingRight = true;
+       
             
     }
     void FixedUpdate()
     {
         
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = 0;
-        if (isjump)
+        if(horizontal < 0 && facingRight)
         {
-            vertical += 30;
-            isjump = false;
+            Flip();
+            
+        } else if(horizontal > 0 && !facingRight)
+        {
+            Flip();
+            
+        }
+
+        float vertical = rb2d.velocity.y;
+        if (isJumping)
+        {
+            vertical += 15 * jumpMultiplier;
+            isJumping = false;
         }
         
+
+        Vector2 movement = new Vector2(horizontal * speed, vertical);
         
-        
-        Vector2 movement = new Vector2(horizontal, vertical);
-        rb2d.AddForce(movement * speed);
-        
+        rb2d.velocity = movement;
+
+
+
+
     }
 
     // Update is called once per frame
@@ -43,9 +60,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isjump = true;
+            isJumping = true;
             animator.SetBool("IsJump", true);
         }
+       
 
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
@@ -54,5 +72,13 @@ public class PlayerController : MonoBehaviour
     public void OnLanding()
     {
         animator.SetBool("IsJump", false);
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }

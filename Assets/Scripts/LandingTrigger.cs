@@ -6,12 +6,15 @@ using UnityEngine.Events;
 public class LandingTrigger : MonoBehaviour
 {
 
+
     public UnityEvent OnLandEvent;
+    private bool topJump;
+    private Rigidbody2D rb2d;
     // Start is called before the first frame update
     void Start()
     {
-
-
+        rb2d = GetComponent<Rigidbody2D>();
+        topJump = false;
         if (OnLandEvent == null)
         {
             OnLandEvent = new UnityEvent();
@@ -22,9 +25,13 @@ public class LandingTrigger : MonoBehaviour
     void Update()
     {
 
-        float vertical = Input.GetAxis("Vertical");
-        if (vertical == 0)
+        if (rb2d.velocity.y < 0)
         {
+            topJump = true;
+        }
+        if (rb2d.velocity.y == 0 && topJump)
+        {
+            topJump = false;
             OnLandEvent.Invoke();
         }
     }

@@ -1,0 +1,85 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BulletController : MonoBehaviour
+{
+
+    
+    private Vector3 offset;
+    private Rigidbody2D rb2d;
+    public int bulletSpeedDecrease;
+    public PlayerController player;
+    
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+        player = GetComponent<PlayerController>();
+        transform.Rotate(0, 0, 90f, Space.Self);
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 5.23f;
+
+        Vector3 gunPos = Camera.main.WorldToScreenPoint(transform.position);
+        float x = (mousePos.x - gunPos.x) / bulletSpeedDecrease;
+        float y = (mousePos.y - gunPos.y) / bulletSpeedDecrease;
+
+       
+
+        Vector2 movement = new Vector2(x, y);
+        rb2d.velocity = movement;
+        DestroyObjectDelayed();
+
+
+    }
+
+    void DestroyObjectDelayed()
+    {
+        Destroy(gameObject, 5);
+    }
+
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Heli"))
+        {
+            Debug.Log("h");
+            //player.count++;
+            gameObject.SetActive(false);
+            Destroy(gameObject, 0);
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("p");
+            //Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+
+    /*
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Heli")
+        {
+            
+            player.count++;
+            Destroy(gameObject, 0);
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+           
+            //Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+    }
+    */
+
+    void Update()
+    {
+        
+    }
+
+
+}

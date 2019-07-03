@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour
@@ -9,20 +10,25 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private Rigidbody2D rb2d;
     private bool isJumping;
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
+
+    public Text countText;
     public float jumpMultiplier = 2f;
     private bool facingRight;
+    public int count;
+    private GunController gun;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        count = 0;
         rb2d = GetComponent<Rigidbody2D>();
+        
         isJumping = false;
         facingRight = true;
-       
-            
+        SetCountText();
+
+
     }
     void FixedUpdate()
     {
@@ -51,8 +57,6 @@ public class PlayerController : MonoBehaviour
         rb2d.velocity = movement;
 
 
-
-
     }
 
     // Update is called once per frame
@@ -64,7 +68,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsJump", true);
         }
        
-
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
     }
@@ -74,11 +77,30 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsJump", false);
     }
 
+    public void AddCount()
+    {
+        count++;
+        SetCountText();
+    }
+
     private void Flip()
     {
+        gun = gameObject.transform.GetChild(0).gameObject.GetComponent<GunController>();
+
+        if (gun == null)
+        {
+            Debug.Log("q");
+        }
+        
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        gun.UnFlip();
+    }
+
+    void SetCountText()
+    {
+        countText.text = "Count: " + count.ToString();
     }
 }

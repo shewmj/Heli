@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Heli
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,13 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3808999405
+    locked: 0
+  - name: Bullet
+    uniqueID: 4122379917
+    locked: 0
+  - name: Gun
+    uniqueID: 4095564363
+    locked: 0
+  - name: New Layer
+    uniqueID: 3949575375
     locked: 0

@@ -15,15 +15,19 @@ public class PlayerController : MonoBehaviour
     public float jumpMultiplier = 2f;
     private bool facingRight;
     public int count;
-    private GunController gun;
     
+    public GameObject handgun;
+    public GameObject ak47;
+    private int currentSlot;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         count = 0;
         rb2d = GetComponent<Rigidbody2D>();
-        
+        currentSlot = 0;
         isJumping = false;
         facingRight = true;
         SetCountText();
@@ -41,7 +45,6 @@ public class PlayerController : MonoBehaviour
         } else if(horizontal > 0 && !facingRight)
         {
             Flip();
-            
         }
 
         float vertical = rb2d.velocity.y;
@@ -67,7 +70,25 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             animator.SetBool("IsJump", true);
         }
-       
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            transform.GetChild(currentSlot).gameObject.SetActive(false);
+
+
+            if(currentSlot < transform.childCount - 1)
+            {
+                currentSlot++;
+            } else
+            {
+                currentSlot = 0;
+            }
+            
+            transform.GetChild(currentSlot).gameObject.SetActive(true);
+
+            
+        }
+
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
     }
@@ -83,20 +104,28 @@ public class PlayerController : MonoBehaviour
         SetCountText();
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("AK47pickup"))
+        {
+            //Debug.Log("ak");
+            //player.GetComponent<PlayerController>().AddCount();
+            other.gameObject.SetActive(false);
+            //Destroy(gameObject, 0);
+        }
+
+    }
+
     private void Flip()
     {
-        gun = gameObject.transform.GetChild(0).gameObject.GetComponent<GunController>();
-
-        if (gun == null)
-        {
-            Debug.Log("q");
-        }
+       
         
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-        gun.UnFlip();
+
+        gameObject.transform.GetChild(currentSlot).gameObject.GetComponent<GunController>().UnFlip();
     }
 
     void SetCountText()

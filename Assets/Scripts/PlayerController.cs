@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             animator.SetBool("IsJump", true);
         }
-
+        
         if (Input.GetKeyDown(KeyCode.E))
         {
             transform.GetChild(currentSlot).gameObject.SetActive(false);
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
             
         }
-
+        //CheckWeapons();
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
     }
@@ -108,28 +108,32 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("AK47pickup"))
         {
-            //Debug.Log("ak");
-            //player.GetComponent<PlayerController>().AddCount();
             other.gameObject.SetActive(false);
-            //Destroy(gameObject, 0);
+            GameObject temp = Instantiate(ak47, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
         }
 
     }
 
     private void Flip()
     {
-       
-        
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-
         gameObject.transform.GetChild(currentSlot).gameObject.GetComponent<GunController>().UnFlip();
     }
 
-    void SetCountText()
+    private void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
+    }
+
+
+    public void ResetWeapon()
+    {
+        currentSlot = 0;
+        transform.GetChild(currentSlot).gameObject.SetActive(true);
     }
 }

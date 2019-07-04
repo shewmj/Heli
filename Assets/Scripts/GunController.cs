@@ -5,16 +5,32 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
 
-    public Transform player;
+    private Transform player;
     public GameObject bulletPrefab;
     private Vector3 offset;
     private bool facingRight;
+    private int maxShots;
+    private int shots;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        shots = 0;
+        player = transform.parent.transform;
         facingRight = true;
         offset = transform.position - player.position;
+
+        switch(gameObject.tag)
+        {
+            case "AK47":
+                maxShots = 10;
+                break;
+            default:
+                maxShots = int.MaxValue;
+                break;
+
+        }
     }
 
     // Update is called once per frame
@@ -53,7 +69,12 @@ public class GunController : MonoBehaviour
 
     private void Shoot()
     {
+        shots++;
         Instantiate(bulletPrefab, transform.position, transform.rotation);
+        if(shots >= maxShots)
+        {
+            DestroyObject();
+        }
     }
 
     private void Flip()
@@ -74,7 +95,17 @@ public class GunController : MonoBehaviour
         //theScale.y *= -1;
         transform.localScale = theScale;
     }
+
     
+
+
+    private void DestroyObject()
+    {
+        gameObject.SetActive(false);
+        transform.parent.GetComponent<PlayerController>().ResetWeapon();
+        Destroy(gameObject, 0);
+    }
+
 
 
 

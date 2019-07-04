@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3043118729065601787}
   m_Layer: 0
   m_Name: AK47
-  m_TagString: Untagged
+  m_TagString: AK47
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,6 +93,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26da5d648a47964db07a6867ef95fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   bulletPrefab: {fileID: 3434130885905752949, guid: b5be77ee922d5db4b94d91a36de10d97,
     type: 3}

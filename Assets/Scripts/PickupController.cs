@@ -13,17 +13,10 @@ public class PickupController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(new Vector3(0, 200, 0) * Time.deltaTime);
     }
 
 
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            
-        }
-
-    }
+   
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -24402823478814105}
   m_Layer: 0
   m_Name: AK47Pickup
-  m_TagString: AK47pickup
+  m_TagString: AK47Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

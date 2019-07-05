@@ -16,8 +16,13 @@ public class PlayerController : MonoBehaviour
     private bool facingRight;
     public int count;
     
-    public GameObject handgun;
+    public GameObject pistol;
     public GameObject ak47;
+    public GameObject m4;
+    public GameObject mp5;
+    public GameObject p90;
+    public GameObject shotgun;
+    public GameObject sniper;
     private int currentSlot;
 
 
@@ -106,10 +111,40 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("AK47pickup"))
+        if (other.gameObject.CompareTag("AK47Pickup"))
         {
             other.gameObject.SetActive(false);
             GameObject temp = Instantiate(ak47, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
+        } else if (other.gameObject.CompareTag("M4Pickup"))
+        {
+            other.gameObject.SetActive(false);
+            GameObject temp = Instantiate(m4, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
+        }else if (other.gameObject.CompareTag("MP5Pickup"))
+        {
+            other.gameObject.SetActive(false);
+            GameObject temp = Instantiate(mp5, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
+        } else if (other.gameObject.CompareTag("P90Pickup"))
+        {
+            other.gameObject.SetActive(false);
+            GameObject temp = Instantiate(p90, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
+        }else if (other.gameObject.CompareTag("ShotgunPickup"))
+        {
+            other.gameObject.SetActive(false);
+            GameObject temp = Instantiate(shotgun, transform.position, transform.rotation);
+            temp.SetActive(false);
+            temp.transform.parent = transform;
+        }else if (other.gameObject.CompareTag("SniperPickup"))
+        {
+            other.gameObject.SetActive(false);
+            GameObject temp = Instantiate(sniper, transform.position, transform.rotation);
             temp.SetActive(false);
             temp.transform.parent = transform;
         }

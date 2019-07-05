@@ -17,7 +17,7 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        
+       
         transform.Rotate(0, 0, 270f, Space.Self);
 
         Vector3 mousePos = Input.mousePosition;

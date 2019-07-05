@@ -10,7 +10,7 @@ public class BulletController : MonoBehaviour
     private Vector3 offset;
     private Rigidbody2D rb2d;
     public int bulletSpeedDecrease;
-    public GameObject player;
+    private GameObject player;
     
 
     // Start is called before the first frame update

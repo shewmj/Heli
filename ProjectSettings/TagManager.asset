@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Heli
   - AK47pickup
+  - Pistol
+  - AK47
+  - MP5
+  - MP5Pickup
   layers:
   - Default
   - TransparentFX

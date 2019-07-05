@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         SetCountText();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("AK47pickup"))
         {
@@ -115,6 +115,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+
 
     private void Flip()
     {

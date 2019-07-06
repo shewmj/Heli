@@ -8,7 +8,7 @@ public class GunController : MonoBehaviour
     private Transform player;
     public GameObject bulletPrefab;
     private Vector3 offset;
-    private bool facingRight;
+    public bool facingRight;
     private int maxShots;
     private int shots;
 

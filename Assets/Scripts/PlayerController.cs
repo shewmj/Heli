@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     public Text countText;
     public float jumpMultiplier = 2f;
-    private bool facingRight;
+    public bool facingRight;
     public int count;
     
     public GameObject pistol;
@@ -39,19 +39,12 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+
     void FixedUpdate()
     {
         
         float horizontal = Input.GetAxis("Horizontal");
-        if(horizontal < 0 && facingRight)
-        {
-            Flip();
-            
-        } else if(horizontal > 0 && !facingRight)
-        {
-            Flip();
-        }
-
         float vertical = rb2d.velocity.y;
         if (isJumping)
         {
@@ -91,7 +84,18 @@ public class PlayerController : MonoBehaviour
             
             transform.GetChild(currentSlot).gameObject.SetActive(true);
 
-            
+            return;
+        }
+
+        float horizontal = Input.GetAxis("Horizontal");
+        if (horizontal < 0 && facingRight)
+        {
+            Flip();
+
+        }
+        else if (horizontal > 0 && !facingRight)
+        {
+            Flip();
         }
         //CheckWeapons();
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));

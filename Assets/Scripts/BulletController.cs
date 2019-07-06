@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class BulletController : MonoBehaviour
     
     private Vector3 offset;
     private Rigidbody2D rb2d;
-    public int bulletSpeedDecrease;
+    public int bulletSpeed;
     private GameObject player;
     
 
@@ -21,18 +22,23 @@ public class BulletController : MonoBehaviour
         transform.Rotate(0, 0, 270f, Space.Self);
 
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 5.23f;
+        mousePos.z = 0f;
 
         Vector3 gunPos = Camera.main.WorldToScreenPoint(transform.position);
-        float x = (mousePos.x - gunPos.x) / bulletSpeedDecrease;
-        float y = (mousePos.y - gunPos.y) / bulletSpeedDecrease;
+        float x = (mousePos.x - gunPos.x);
+        float y = (mousePos.y - gunPos.y);
+
+        float magnitude = (float)Math.Sqrt((x * x) + (y * y));
+
+        x /= magnitude;
+        y /= magnitude;
 
         player = GameObject.Find("Player");
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 
         Vector2 movement = new Vector2(x, y);
-        rb2d.velocity = movement;
+        rb2d.velocity = movement * 10 * bulletSpeed;
         DestroyObjectDelayed();
 
 

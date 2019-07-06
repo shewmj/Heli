@@ -26,6 +26,21 @@ public class GunController : MonoBehaviour
             case "AK47":
                 maxShots = 10;
                 break;
+            case "M4":
+                maxShots = 10;
+                break;
+            case "MP5":
+                maxShots = 10;
+                break;
+            case "P90":
+                maxShots = 10;
+                break;
+            case "Shotgun":
+                maxShots = 10;
+                break;
+            case "Sniper":
+                maxShots = 10;
+                break;
             default:
                 maxShots = int.MaxValue;
                 break;
@@ -39,23 +54,21 @@ public class GunController : MonoBehaviour
 
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 5.23f;
-
         Vector3 gunPos = Camera.main.WorldToScreenPoint(transform.position);
         mousePos.x = mousePos.x - gunPos.x;
         mousePos.y = mousePos.y - gunPos.y;
-
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         transform.position = player.position + offset;
 
-        //Debug.Log("z: " + transform.eulerAngles.z);
         float rotation = transform.eulerAngles.z;
         if (rotation > 90 && rotation < 270 && facingRight)
         {
-            Flip();
-        } else if((rotation <= 90 || rotation >= 270) && !facingRight)
+            AimingFlip();
+        }
+        else if((rotation <= 90 || rotation >= 270) && !facingRight)
         {
-            Flip();
+            AimingFlip();
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -77,7 +90,7 @@ public class GunController : MonoBehaviour
         }
     }
 
-    private void Flip()
+    private void AimingFlip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
@@ -87,12 +100,10 @@ public class GunController : MonoBehaviour
     }
 
     
-    public void UnFlip()
+    public void UnPlayerFlip()
     {
-        //facingRight = !facingRight;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
-        //theScale.y *= -1;
         transform.localScale = theScale;
     }
 

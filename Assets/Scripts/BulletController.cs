@@ -18,18 +18,15 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-       
+
         transform.Rotate(0, 0, 270f, Space.Self);
 
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0f;
-
         Vector3 gunPos = Camera.main.WorldToScreenPoint(transform.position);
         float x = (mousePos.x - gunPos.x);
         float y = (mousePos.y - gunPos.y);
-
         float magnitude = (float)Math.Sqrt((x * x) + (y * y));
-
         x /= magnitude;
         y /= magnitude;
 
@@ -38,7 +35,7 @@ public class BulletController : MonoBehaviour
 
 
         Vector2 movement = new Vector2(x, y);
-        rb2d.velocity = movement * 10 * bulletSpeed;
+        rb2d.velocity = movement * 6 * bulletSpeed;
         DestroyObjectDelayed();
 
 
@@ -54,12 +51,10 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Heli"))
         {
-            Debug.Log("h");
             player.GetComponent<PlayerController>().AddCount();
             gameObject.SetActive(false);
             Destroy(gameObject, 0);
         }
-        
     }
     
 
